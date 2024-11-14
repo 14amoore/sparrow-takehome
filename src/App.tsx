@@ -1,5 +1,17 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import EmployeeView from './views/EmployeeView';
+import CustomerView from './views/CustomerView';
+
 function App() {
-  return (<p>Hello World</p>)
+  return (
+    <Router>
+      <Routes>
+        <Route path="/employee" Component={EmployeeView} />
+        <Route path="/customer" Component={CustomerView} />
+        <Route />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
