@@ -1,13 +1,13 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import EmployeeDashboard from './views/Employee/EmployeeDashboard';
-import CustomerView from './views/CustomerView';
+import MenuView from './views/Customer/MenuView';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/employee" element={<EmployeeDashboard />} />
-        <Route path="/customer" element={<CustomerView />} />
+        <Route path="/customer" element={<MenuView />} />
       </Routes>
     </Router>
   );
