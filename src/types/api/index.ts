@@ -3,15 +3,15 @@
  * Base URL: https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home
  */
 
-// import {
-//   HiringFrontendTakeHomeOrderRequest,
-//   HiringFrontendTakeHomeOrderResponse,
-//   HiringFrontendTakeHomeOrderStatus,
-//   HiringFrontendTakeHomePizzaSize,
-//   HiringFrontendTakeHomePizzaToppings,
-//   HiringFrontendTakeHomeToppingQuantity,
-//   SpecialtyPizza,
-// } from "..";
+import {
+  // HiringFrontendTakeHomeOrderRequest,
+  HiringFrontendTakeHomeOrderResponse,
+  // HiringFrontendTakeHomeOrderStatus,
+  // HiringFrontendTakeHomePizzaSize,
+  // HiringFrontendTakeHomePizzaToppings,
+  // HiringFrontendTakeHomeToppingQuantity,
+  // SpecialtyPizza,
+} from "..";
 
 /**
  * Response type for pizza pricing endpoint
@@ -56,9 +56,9 @@
  * GET /pizzas
  * Retrieves all orders for a specific location in the Pizza Orders Table view
  */
-// type GetAllOrdersRequest = (locationId: string) => Promise<{
-//   orders: HiringFrontendTakeHomeOrderResponse[];
-// }>;
+export type GetAllOrdersRequest = (locationId: string) => Promise<{
+  orders: HiringFrontendTakeHomeOrderResponse[];
+}>;
 
 /**
  * GET /pizza

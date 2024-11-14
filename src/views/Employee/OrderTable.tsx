@@ -1,9 +1,31 @@
+import { useEffect, useState } from 'react';
+import { HiringFrontendTakeHomeOrderResponse } from '../../types';
+import { getAllOrders } from '../../api/orders';
+
 function OrderTable() {
-  const orders = [
-    { id: '001', status: 'Pending', totalAmount: 25.99 },
-    { id: '002', status: 'In Progress', totalAmount: 30.49 },
-    { id: '003', status: 'Completed', totalAmount: 15.99 },
-  ];
+  const [orders, setOrders] = useState<HiringFrontendTakeHomeOrderResponse[]>(
+    []
+  );
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const locationId = 'a-moore';
+        const { orders } = await getAllOrders(locationId);
+        setOrders(orders);
+      } catch (error) {
+        setError(error);
+      }
+    };
+    fetchOrders();
+  }, []);
+
+  //   const orders = [
+  //     { id: '001', status: 'Pending', totalAmount: 25.99 },
+  //     { id: '002', status: 'In Progress', totalAmount: 30.49 },
+  //     { id: '003', status: 'Completed', totalAmount: 15.99 },
+  //   ];
 
   return (
     <table className="min-w-full bg-white">
