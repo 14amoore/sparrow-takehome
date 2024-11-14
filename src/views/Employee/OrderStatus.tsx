@@ -1,8 +1,7 @@
 function OrderStatusUpdate() {
-  const updateStatus = (orderId, newStatus) => {
-    console.log(`Updating order ${orderId} to ${newStatus}`);
-    // Here, you could implement logic to update the order status in state or send it to an API
-  };
+  //   const updateStatus = (orderId, newStatus) => {
+  //     console.log(`Updating order ${orderId} to ${newStatus}`);
+  //   };
 
   return (
     <div>

@@ -6,7 +6,7 @@ function OrderTable() {
   const [orders, setOrders] = useState<HiringFrontendTakeHomeOrderResponse[]>(
     []
   );
-  const [error, setError] = useState<string | null>(null);
+  //   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -15,7 +15,7 @@ function OrderTable() {
         const { orders } = await getAllOrders(locationId);
         setOrders(orders);
       } catch (error) {
-        setError(error);
+        console.error(error);
       }
     };
     fetchOrders();
