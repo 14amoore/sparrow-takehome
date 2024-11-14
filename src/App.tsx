@@ -8,7 +8,6 @@ function App() {
       <Routes>
         <Route path="/employee" element={<EmployeeView />} />
         <Route path="/customer" element={<CustomerView />} />
-        {/* Define other routes here */}
       </Routes>
     </Router>
   );
