@@ -10,7 +10,7 @@ import {
   // HiringFrontendTakeHomePizzaSize,
   // HiringFrontendTakeHomePizzaToppings,
   // HiringFrontendTakeHomeToppingQuantity,
-  // SpecialtyPizza,
+  SpecialtyPizza,
 } from "..";
 
 /**
@@ -32,9 +32,9 @@ import {
  * GET /specialty-pizzas
  * Retrieves the list of specialty pizzas
  */
-// type GetAllSpecialtyPizzasRequest = () => Promise<{
-//   specialtyPizzas: SpecialtyPizza[];
-// }>;
+export type GetAllSpecialtyPizzasRequest = () => Promise<{
+  specialtyPizzas: SpecialtyPizza[];
+}>;
 
 /**
  * GET /pizza-pricing
