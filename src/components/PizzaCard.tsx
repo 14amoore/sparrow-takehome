@@ -13,7 +13,10 @@ const PizzaCard = ({ pizzas }: Props) => {
     [id: string]: HiringFrontendTakeHomePizzaSize | null;
   }>({});
 
-  const handlePizzaSelect = (id: string, size: string) => {
+  const handlePizzaSelect = (
+    id: string,
+    size: HiringFrontendTakeHomePizzaSize
+  ) => {
     setSelectedSizes((prev) => ({
       ...prev,
       [id]: prev[id] === size ? null : size, // Deselect if clicked twice
