@@ -42,7 +42,7 @@ const PizzaCard = ({ pizzas }: Props) => {
       </div>
 
       {/* Specialty Pizza Options */}
-      {pizzas.map(({ id, name, description }) => (
+      {pizzas.map(({ id, name, description, price }) => (
         <div
           key={id}
           className="w-72 h-48 flex flex-col justify-between border border-gray-200 rounded-lg shadow-lg p-4"
@@ -56,6 +56,7 @@ const PizzaCard = ({ pizzas }: Props) => {
           <SizeChips
             pizzaSelect={(size) => handlePizzaSelect(id, size)}
             selectedSize={selectedSizes[id]}
+            prices={price}
           />
         </div>
       ))}
