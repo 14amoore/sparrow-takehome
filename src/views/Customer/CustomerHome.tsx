@@ -22,7 +22,7 @@ function CustomerHome() {
         console.error(error);
         setErrorMessage((error as Error).message);
       } finally {
-        // setIsLoading(false);
+        setIsLoading(false);
       }
     };
     fetchPizzas();
