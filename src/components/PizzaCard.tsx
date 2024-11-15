@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SpecialtyPizza } from '../types';
+import { SpecialtyPizza, HiringFrontendTakeHomePizzaSize } from '../types';
 
 import { Typography } from '@mui/material';
 import SizeChips from './SizeChips';
@@ -10,7 +10,7 @@ interface Props {
 
 const PizzaCard = ({ pizzas }: Props) => {
   const [selectedSizes, setSelectedSizes] = useState<{
-    [id: string]: string | null;
+    [id: string]: HiringFrontendTakeHomePizzaSize | null;
   }>({});
 
   const handlePizzaSelect = (id: string, size: string) => {
