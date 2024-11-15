@@ -32,17 +32,24 @@ function CustomerHome() {
     return <Loading />;
   } else if (errorMessage) {
     return (
-      <Container>
-        <Box>{errorMessage}</Box>
+      <Container className="flex items-center justify-center min-h-screen">
+        <Box className="text-red-600 text-lg font-semibold">{errorMessage}</Box>
       </Container>
     );
   } else {
     return (
-      <Container>
-        <Typography variant="h4" align="center" gutterBottom>
+      <Container className="min-h-screen flex flex-col items-center py-8">
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          className="text-gray-800 font-bold"
+        >
           Welcome to Sparrow Pizza!
         </Typography>
-        <PizzaCard pizzas={specialtyPizzas} />
+        <Box className="w-full max-w-4xl mt-6">
+          <PizzaCard pizzas={specialtyPizzas} />
+        </Box>
       </Container>
     );
   }

@@ -1,11 +1,28 @@
-import { SpecialtyPizza } from '../types';
-import { Button, Typography } from '@mui/material';
+import { useState } from 'react';
+import { SpecialtyPizza, HiringFrontendTakeHomePizzaSize } from '../types';
+
+import { Typography } from '@mui/material';
+import SizeChips from './SizeChips';
 
 interface Props {
   pizzas: SpecialtyPizza[];
 }
 
 const PizzaCard = ({ pizzas }: Props) => {
+  const [selectedSizes, setSelectedSizes] = useState<{
+    [id: string]: HiringFrontendTakeHomePizzaSize | null;
+  }>({});
+
+  const handlePizzaSelect = (
+    id: string,
+    size: HiringFrontendTakeHomePizzaSize
+  ) => {
+    setSelectedSizes((prev) => ({
+      ...prev,
+      [id]: prev[id] === size ? null : size,
+    }));
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
       {/* Custom Pizza Option */}
@@ -18,13 +35,14 @@ const PizzaCard = ({ pizzas }: Props) => {
             Build your own pizza with your favorite toppings!
           </Typography>
         </div>
-        <Button variant="contained" className="mt-4">
-          Customize Pizza
-        </Button>
+        <SizeChips
+          pizzaSelect={(size) => handlePizzaSelect('custom', size)}
+          selectedSize={selectedSizes['custom']}
+        />
       </div>
 
       {/* Specialty Pizza Options */}
-      {pizzas.map(({ id, name, description }) => (
+      {pizzas.map(({ id, name, description, price }) => (
         <div
           key={id}
           className="w-72 h-48 flex flex-col justify-between border border-gray-200 rounded-lg shadow-lg p-4"
@@ -35,9 +53,11 @@ const PizzaCard = ({ pizzas }: Props) => {
             </Typography>
             <Typography variant="body2">{description}</Typography>
           </div>
-          <Button variant="contained" className="mt-4">
-            Select Pizza
-          </Button>
+          <SizeChips
+            pizzaSelect={(size) => handlePizzaSelect(id, size)}
+            selectedSize={selectedSizes[id]}
+            prices={price}
+          />
         </div>
       ))}
     </div>
