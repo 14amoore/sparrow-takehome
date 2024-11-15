@@ -1,11 +1,25 @@
+import { useState } from 'react';
 import { SpecialtyPizza } from '../types';
-import { Button, Typography } from '@mui/material';
+
+import { Typography } from '@mui/material';
+import SizeChips from './SizeChips';
 
 interface Props {
   pizzas: SpecialtyPizza[];
 }
 
 const PizzaCard = ({ pizzas }: Props) => {
+  const [selectedSizes, setSelectedSizes] = useState<{
+    [id: string]: string | null;
+  }>({});
+
+  const handlePizzaSelect = (id: string, size: string) => {
+    setSelectedSizes((prev) => ({
+      ...prev,
+      [id]: prev[id] === size ? null : size, // Deselect if clicked twice
+    }));
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-items-center">
       {/* Custom Pizza Option */}
@@ -18,9 +32,10 @@ const PizzaCard = ({ pizzas }: Props) => {
             Build your own pizza with your favorite toppings!
           </Typography>
         </div>
-        <Button variant="contained" className="mt-4">
-          Customize Pizza
-        </Button>
+        <SizeChips
+          pizzaSelect={(size) => handlePizzaSelect('custom', size)}
+          selectedSize={selectedSizes['custom']}
+        />
       </div>
 
       {/* Specialty Pizza Options */}
@@ -35,9 +50,10 @@ const PizzaCard = ({ pizzas }: Props) => {
             </Typography>
             <Typography variant="body2">{description}</Typography>
           </div>
-          <Button variant="contained" className="mt-4">
-            Select Pizza
-          </Button>
+          <SizeChips
+            pizzaSelect={(size) => handlePizzaSelect(id, size)}
+            selectedSize={selectedSizes[id]}
+          />
         </div>
       ))}
     </div>
