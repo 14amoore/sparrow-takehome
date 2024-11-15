@@ -1,6 +1,13 @@
 import { SpecialtyPizza } from '../types';
 
-import { Button, Card, CardActions, CardContent, Grid2 } from '@mui/material';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid2,
+  Typography,
+} from '@mui/material';
 
 interface Props {
   pizzas: SpecialtyPizza[];
@@ -12,10 +19,18 @@ const PizzaCard = ({ pizzas }: Props) => {
       {pizzas.map(({ id, name, description }) => (
         <Grid2 key={id}>
           <Card>
-            <CardContent>{name}</CardContent>
-            <CardContent>{description}</CardContent>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {name}
+              </Typography>
+              <Typography variant="body2">{description}</Typography>
+            </CardContent>
             <CardActions>
-              <Button>Select Pizza</Button>
+              <Button>
+                <Typography variant="button" gutterBottom>
+                  Select Pizza
+                </Typography>
+              </Button>
             </CardActions>
           </Card>
         </Grid2>

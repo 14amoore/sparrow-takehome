@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { getAllSpecialtyPizzas } from '../../api/pizzas';
 import { SpecialtyPizza } from '../../types';
 
+import Loading from '../../components/Loading';
 import PizzaCard from '../../components/PizzaCard';
 
-import { Typography, Container, Box, CircularProgress } from '@mui/material';
+import { Typography, Container, Box } from '@mui/material';
 
 function CustomerHome() {
   const [specialtyPizzas, setSpecialtyPizzas] = useState<SpecialtyPizza[]>([]);
@@ -21,18 +22,14 @@ function CustomerHome() {
         console.error(error);
         setErrorMessage((error as Error).message);
       } finally {
-        setIsLoading(false);
+        // setIsLoading(false);
       }
     };
     fetchPizzas();
   }, []);
 
   if (isLoading) {
-    return (
-      <Container>
-        <CircularProgress />
-      </Container>
-    );
+    return <Loading />;
   } else if (errorMessage) {
     return (
       <Container>
