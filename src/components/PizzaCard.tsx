@@ -19,7 +19,7 @@ const PizzaCard = ({ pizzas }: Props) => {
   ) => {
     setSelectedSizes((prev) => ({
       ...prev,
-      [id]: prev[id] === size ? null : size, // Deselect if clicked twice
+      [id]: prev[id] === size ? null : size,
     }));
   };
 
