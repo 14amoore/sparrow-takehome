@@ -21,9 +21,9 @@ const SizeChips = ({ pizzaSelect, selectedSize, prices }: Props) => {
       if (hoveredSize === size || selectedSize === size) {
         return `$${prices[size].toFixed(2)}`; // Show price
       }
-      return size.charAt(0).toUpperCase() + size.slice(1); // Capitalized size
+      return size.charAt(0).toUpperCase() + size.slice(1);
     }
-    return size.charAt(0).toUpperCase() + size.slice(1); // Capitalized size (fallback)
+    return size.charAt(0).toUpperCase() + size.slice(1);
   };
 
   return (
