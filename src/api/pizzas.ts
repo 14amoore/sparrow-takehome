@@ -1,8 +1,7 @@
-// src/api/pizzas.ts
 import { GetAllSpecialtyPizzasRequest } from "../types/api";
 import { SpecialtyPizza } from "../types";
 
-const BASE_URL = "https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getAllSpecialtyPizzas: GetAllSpecialtyPizzasRequest = async () => {
     const response = await fetch(`${BASE_URL}/specialty-pizzas`);
@@ -11,6 +10,5 @@ export const getAllSpecialtyPizzas: GetAllSpecialtyPizzasRequest = async () => {
     }
     const data = await response.json();
     
-    // Map the response data to match the expected return type
-    return { specialtyPizzas: data.specialtyPizzas as SpecialtyPizza[] }; // Adjust the key to match `specialtyPizzas`
+    return { specialtyPizzas: data.specialtyPizzas as SpecialtyPizza[] }; 
 };

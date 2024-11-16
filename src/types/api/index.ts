@@ -7,22 +7,24 @@ import {
   // HiringFrontendTakeHomeOrderRequest,
   HiringFrontendTakeHomeOrderResponse,
   // HiringFrontendTakeHomeOrderStatus,
-  // HiringFrontendTakeHomePizzaSize,
-  // HiringFrontendTakeHomePizzaToppings,
-  // HiringFrontendTakeHomeToppingQuantity,
+  HiringFrontendTakeHomePizzaSize,
+  HiringFrontendTakeHomePizzaToppings,
+  HiringFrontendTakeHomeToppingQuantity,
+  PizzaTopping,
   SpecialtyPizza,
 } from "..";
 
 /**
  * Response type for pizza pricing endpoint
  */
-// interface GetPizzaPricingResponse {
-//   size: Record<HiringFrontendTakeHomePizzaSize, number>;
-//   toppingPrices: Record<
-//     HiringFrontendTakeHomePizzaToppings,
-//     Record<HiringFrontendTakeHomeToppingQuantity, number>
-//   >;
-// }
+export interface GetPizzaPricingResponse {
+  size: Record<HiringFrontendTakeHomePizzaSize, number>;
+  toppingPrices: Record<
+    HiringFrontendTakeHomePizzaToppings,
+    Record<HiringFrontendTakeHomeToppingQuantity, number>
+  >;
+  toppings?: PizzaTopping[];
+}
 
 /**
  * API Endpoint Types
@@ -40,7 +42,7 @@ export type GetAllSpecialtyPizzasRequest = () => Promise<{
  * GET /pizza-pricing
  * Retrieves pizza pricing information
  */
-// type GetPizzaPricingRequest = () => Promise<GetPizzaPricingResponse>;
+export type GetPizzaPricingRequest = () => Promise<GetPizzaPricingResponse>;
 
 /**
  * POST /pizza

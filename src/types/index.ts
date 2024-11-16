@@ -29,7 +29,7 @@ export enum HiringFrontendTakeHomeToppingQuantity {
 }
 
 // Represents a single topping with its quantity
-type PizzaTopping = {
+export type PizzaTopping = {
   name: HiringFrontendTakeHomePizzaToppings;
   quantity: HiringFrontendTakeHomeToppingQuantity;
 };
