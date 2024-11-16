@@ -31,9 +31,14 @@ const ToppingsModalContent = ({
     [key: string]: string;
   }>({});
 
-  const [totalPrice, setTotalPrice] = useState<number>(
-    initialToppings.price !== null ? initialToppings.price : 0
+  const initialTotalPrice = Object.values(initialToppings).reduce(
+    (sum, topping) => {
+      return sum + (topping.price || 0);
+    },
+    0
   );
+
+  const [totalPrice, setTotalPrice] = useState<number>(initialTotalPrice);
 
   const handleToppingChange = (toppingId: string, amount: string) => {
     const topping = toppings.find((topping) => topping.id === toppingId);
@@ -42,8 +47,13 @@ const ToppingsModalContent = ({
 
     const previousAmount = selectedToppings[toppingId] || 'none';
     const previousPrice =
-      previousAmount !== 'none' ? topping.prices[previousAmount] || 0 : 0;
-    const newPrice = amount !== 'none' ? topping.prices[amount] || 0 : 0;
+      previousAmount !== 'none'
+        ? topping.prices[previousAmount as 'light' | 'regular' | 'extra'] || 0
+        : 0;
+    const newPrice =
+      amount !== 'none'
+        ? topping.prices[amount as 'light' | 'regular' | 'extra'] || 0
+        : 0;
 
     setTotalPrice((prevPrice) => prevPrice - previousPrice + newPrice);
 
