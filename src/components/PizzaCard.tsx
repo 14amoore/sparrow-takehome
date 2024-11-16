@@ -1,26 +1,79 @@
 import { useState } from 'react';
-import { SpecialtyPizza, HiringFrontendTakeHomePizzaSize } from '../types';
-
-import { Typography } from '@mui/material';
+import {
+  SpecialtyPizza,
+  HiringFrontendTakeHomePizzaSize,
+  HiringFrontendTakeHomePizzaToppings,
+} from '../types';
+import {
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+} from '@mui/material';
 import SizeChips from './SizeChips';
+import ToppingsModalContent from './ToppingsModalContent';
 
 interface Props {
-  pizzas: SpecialtyPizza[];
+  specialtyPizzas: SpecialtyPizza[];
+  customPizzaPrices: Record<HiringFrontendTakeHomePizzaSize, number>;
+  toppings: {
+    id: string;
+    name: string;
+    prices: {
+      light: number;
+      regular: number;
+      extra: number;
+    };
+  }[];
 }
 
-const PizzaCard = ({ pizzas }: Props) => {
-  const [selectedSizes, setSelectedSizes] = useState<{
-    [id: string]: HiringFrontendTakeHomePizzaSize | null;
+const PizzaCard = ({ specialtyPizzas, customPizzaPrices, toppings }: Props) => {
+  const [selectedPizzas, setSelectedPizzas] = useState<{
+    [id: string]: {
+      size: HiringFrontendTakeHomePizzaSize | null;
+      price: number | null;
+      toppings: string[];
+    };
   }>({});
+  const [activePizzaId, setActivePizzaId] = useState<string | null>(null);
 
   const handlePizzaSelect = (
     id: string,
-    size: HiringFrontendTakeHomePizzaSize
+    size: HiringFrontendTakeHomePizzaSize,
+    price: number,
+    toppings: HiringFrontendTakeHomePizzaToppings = [] as unknown as HiringFrontendTakeHomePizzaToppings
   ) => {
-    setSelectedSizes((prev) => ({
-      ...prev,
-      [id]: prev[id] === size ? null : size,
-    }));
+    setSelectedPizzas((prev) => {
+      if (prev[id]?.size === size) {
+        const { [id]: _, ...rest } = prev;
+        setActivePizzaId(null);
+        return rest;
+      }
+
+      const updatedState = {
+        ...prev,
+        [id]: {
+          size,
+          price,
+          toppings: [...toppings],
+        },
+      };
+      setActivePizzaId(id);
+      return updatedState;
+    });
+  };
+
+  const handleModalClose = () => {
+    setSelectedPizzas((prev) => {
+      if (activePizzaId) {
+        const { [activePizzaId]: _, ...rest } = prev;
+        return rest;
+      }
+      return prev;
+    });
+    setActivePizzaId(null);
   };
 
   return (
@@ -36,13 +89,16 @@ const PizzaCard = ({ pizzas }: Props) => {
           </Typography>
         </div>
         <SizeChips
-          pizzaSelect={(size) => handlePizzaSelect('custom', size)}
-          selectedSize={selectedSizes['custom']}
+          pizzaSelect={(size) =>
+            handlePizzaSelect('custom', size, customPizzaPrices[size])
+          }
+          selectedSize={selectedPizzas['custom']?.size || null}
+          prices={customPizzaPrices}
         />
       </div>
 
       {/* Specialty Pizza Options */}
-      {pizzas.map(({ id, name, description, price }) => (
+      {specialtyPizzas.map(({ id, name, description, price, toppings }) => (
         <div
           key={id}
           className="w-72 h-48 flex flex-col justify-between border border-gray-200 rounded-lg shadow-lg p-4"
@@ -54,12 +110,38 @@ const PizzaCard = ({ pizzas }: Props) => {
             <Typography variant="body2">{description}</Typography>
           </div>
           <SizeChips
-            pizzaSelect={(size) => handlePizzaSelect(id, size)}
-            selectedSize={selectedSizes[id]}
+            pizzaSelect={(size) =>
+              handlePizzaSelect(id, size, price[size], toppings)
+            }
+            selectedSize={selectedPizzas[id]?.size || null}
             prices={price}
           />
         </div>
       ))}
+
+      {/* Toppings Modal */}
+      {activePizzaId && (
+        <Dialog open={!!activePizzaId} onClose={handleModalClose} fullWidth>
+          <DialogTitle>Customize Your Pizza</DialogTitle>
+          <DialogContent>
+            <ToppingsModalContent
+              initialToppings={selectedPizzas[activePizzaId]}
+              toppings={toppings}
+              onUpdate={(updatedToppings) =>
+                setSelectedPizzas(
+                  (prev) => prev && { ...prev, toppings: updatedToppings }
+                )
+              }
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleModalClose}>Cancel</Button>
+            <Button onClick={handleModalClose} variant="contained">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 };

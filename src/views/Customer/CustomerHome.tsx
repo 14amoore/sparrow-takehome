@@ -1,14 +1,33 @@
 import { useEffect, useState } from 'react';
 import { getAllSpecialtyPizzas } from '../../api/pizzas';
-import { SpecialtyPizza } from '../../types';
+import { getAllToppings } from '../../api/toppings';
+import { SpecialtyPizza, HiringFrontendTakeHomePizzaSize } from '../../types';
 
 import Loading from '../../components/Loading';
 import PizzaCard from '../../components/PizzaCard';
 
 import { Typography, Container, Box } from '@mui/material';
 
+interface ToppingsType {
+  id: string;
+  name: string;
+  prices: {
+    light: number;
+    regular: number;
+    extra: number;
+  };
+}
+
 function CustomerHome() {
   const [specialtyPizzas, setSpecialtyPizzas] = useState<SpecialtyPizza[]>([]);
+  const [customPizzaPrices, setCustomPizzaPrices] = useState<
+    Record<HiringFrontendTakeHomePizzaSize, number>
+  >({
+    small: 0,
+    medium: 0,
+    large: 0,
+  });
+  const [toppings, setToppings] = useState<ToppingsType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -18,6 +37,11 @@ function CustomerHome() {
         setIsLoading(true);
         const { specialtyPizzas } = await getAllSpecialtyPizzas();
         setSpecialtyPizzas(specialtyPizzas);
+
+        const getPriceData = await getAllToppings();
+
+        setToppings(getPriceData.transformedToppings);
+        setCustomPizzaPrices(getPriceData.size);
       } catch (error) {
         console.error(error);
         setErrorMessage((error as Error).message);
@@ -48,7 +72,11 @@ function CustomerHome() {
           Welcome to Sparrow Pizza!
         </Typography>
         <Box className="w-full max-w-4xl mt-6">
-          <PizzaCard pizzas={specialtyPizzas} />
+          <PizzaCard
+            specialtyPizzas={specialtyPizzas}
+            customPizzaPrices={customPizzaPrices}
+            toppings={toppings || []}
+          />
         </Box>
       </Container>
     );

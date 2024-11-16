@@ -1,8 +1,7 @@
-// src/api/orders.ts
 import { GetAllOrdersRequest } from '../types/api/index'
 import { HiringFrontendTakeHomeOrderResponse } from '../types';
-const BASE_URL = "https://api.sparrowtest.com/v2/lmd/hiring/frontend/take-home";
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export const getAllOrders: GetAllOrdersRequest = async (locationId: string): Promise<{
   orders: HiringFrontendTakeHomeOrderResponse[];
