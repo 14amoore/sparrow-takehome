@@ -111,7 +111,15 @@ const PizzaCard = ({ specialtyPizzas, customPizzaPrices, toppings }: Props) => {
           </div>
           <SizeChips
             pizzaSelect={(size) =>
-              handlePizzaSelect(id, size, price[size], toppings)
+              handlePizzaSelect(
+                id,
+                size,
+                price[size],
+                toppings.map((topping) => ({
+                  id: topping,
+                  amount: 'regular', // Default to 'regular' or use existing logic
+                })) as unknown as HiringFrontendTakeHomePizzaToppings
+              )
             }
             selectedSize={selectedPizzas[id]?.size || null}
             prices={price}
@@ -125,12 +133,22 @@ const PizzaCard = ({ specialtyPizzas, customPizzaPrices, toppings }: Props) => {
           <DialogTitle>Customize Your Pizza</DialogTitle>
           <DialogContent>
             <ToppingsModalContent
-              initialToppings={selectedPizzas[activePizzaId]}
+              initialToppings={{
+                [activePizzaId]: selectedPizzas[activePizzaId] || {
+                  size: null,
+                  price: null,
+                  toppings: [],
+                },
+              }}
               toppings={toppings}
               onUpdate={(updatedToppings) =>
-                setSelectedPizzas(
-                  (prev) => prev && { ...prev, toppings: updatedToppings }
-                )
+                setSelectedPizzas((prev) => ({
+                  ...prev,
+                  [activePizzaId]: {
+                    ...prev[activePizzaId],
+                    toppings: Object.keys(updatedToppings), // Convert to string[]
+                  },
+                }))
               }
             />
           </DialogContent>
