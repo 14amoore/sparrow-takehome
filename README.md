@@ -1,5 +1,16 @@
 # Pizza Ordering System Frontend Project
 
+## Statement
+- This is my submission for the Sparrow frontend take-home test. This project represents a 20-hour time-boxed effort, and I am pleased with the progress achieved within that time.
+
+Currently, the customer view enables users to select a pizza and customize toppings. The price is calculated accurately based on the selected options. To continue work on the customer-facing side of the app, I would focus on completing the ordering flow while applying a high degree of UI polish.
+
+The employee-facing side of the app has been skeletoned out but does not render data yet, as the customer flow is incomplete. This groundwork lays a foundation for future development.
+
+- The app is deployed via GitHub Pages. You can view the live application [here](https://14amoore.github.io/sparrow-takehome/).
+
+- Below is the original prompt.
+
 ## Overview
 Build a type-safe React application for a pizza ordering system with both customer-facing and employee-facing views. This project is designed to showcase your skills in understanding product requirements, working with TypeScript and React, and demonstrating an intuition for good UX design.
 
